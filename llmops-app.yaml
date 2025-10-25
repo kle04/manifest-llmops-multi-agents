@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: llmops-multi-agent
+  namespace: argocd # Namespace nơi mà ArgoCD được cài đặt
+spec:
+  destination:
+    namespace: llmops
+    server:  https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://github.com/kle04/manifest-llmops-multi-agents
+    path: .
+    targetRevision: main
