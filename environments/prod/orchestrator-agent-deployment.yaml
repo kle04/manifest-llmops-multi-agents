@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: orchestrator-agent
+  name: orchestrator-agent
+  namespace: llmops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orchestrator-agent
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: orchestrator-agent
+    spec:
+      containers:
+      - image: khanhle04/orchestrator-agent:v1.0.0
+        name: orchestrator-agent
+---
