@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: llmops-multi-agent
+  name: llmops-multi-agents
   namespace: argocd # Namespace nơi mà ArgoCD được cài đặt
 spec:
   destination:
