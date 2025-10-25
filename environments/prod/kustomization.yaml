@@ -1,0 +1,2 @@
+resources:
+  - ../../services/orchestrator-agent/overlays/prod

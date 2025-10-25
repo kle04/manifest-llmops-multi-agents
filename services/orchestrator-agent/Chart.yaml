@@ -1,0 +1,6 @@
+apiVersion: v2
+name: orchestrator-agent
+description: Helm chart for Orchestrator Agent (LLMOps)
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

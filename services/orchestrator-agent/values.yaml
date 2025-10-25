@@ -1,0 +1,50 @@
+image:
+  repository: khanhle04/orchestrator-agent
+  tag: v1.0.0
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+service:
+  type: ClusterIP
+  port: 7010
+
+env: []
+envFrom:
+  configMapRef: ""
+  secretRef: ""
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+livenessProbe:
+  enabled: true
+  path: /health
+  initialDelaySeconds: 10
+  periodSeconds: 15
+
+readinessProbe:
+  enabled: true
+  path: /health
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+nodeSelector: {}
+affinity: {}
+tolerations: []
+
+extraEnv: {}                     # nếu muốn thêm env yaml map
+extraVolumes: []
+extraVolumeMounts: []
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}

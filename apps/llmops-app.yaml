@@ -10,5 +10,11 @@ spec:
   project: default
   source:
     repoURL: https://github.com/kle04/manifest-llmops-multi-agents
-    path: .
-    targetRevision: main
+    path: environments/prod
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

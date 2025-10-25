@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "orchestrator-agent.fullname" . }}
+  labels: {{ include "orchestrator-agent.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels: {{ include "orchestrator-agent.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{ include "orchestrator-agent.selectorLabels" . | nindent 8 }}
+      annotations: {{- if .Values.podAnnotations }} {{ toYaml .Values.podAnnotations | nindent 8 }} {{- end }}
+    spec:
+      serviceAccountName: {{ include "orchestrator-agent.serviceAccountName" . }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: orchestrator-agent
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 7010
+              name: http
+          env:
+            {{- if .Values.env }}
+            {{ toYaml .Values.env | nindent 12 }}
+            {{- end }}
+          envFrom:
+            {{- if .Values.envFrom.configMapRef }}
+            - configMapRef:
+                name: {{ .Values.envFrom.configMapRef }}
+            {{- end }}
+            {{- if .Values.envFrom.secretRef }}
+            - secretRef:
+                name: {{ .Values.envFrom.secretRef }}
+            {{- end }}
+          {{- if .Values.extraEnv }}
+          env: {{ toYaml .Values.extraEnv | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            {{- if .Values.extraVolumeMounts }}
+            {{ toYaml .Values.extraVolumeMounts | nindent 12 }}
+            {{- end }}
+          resources: {{ toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.livenessProbe.path }}
+              port: http
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessProbe.path }}
+              port: http
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          {{- end }}
+      volumes:
+        {{- if .Values.extraVolumes }}
+        {{ toYaml .Values.extraVolumes | nindent 8 }}
+        {{- end }}
