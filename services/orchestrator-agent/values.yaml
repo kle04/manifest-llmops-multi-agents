@@ -1,44 +1,58 @@
-namespace: agents
+replicaCount: 2
 
-deployment:
-  name: orchestrator-agent
-  replicaCount: 1
-  labels:
-    appName: orchestrator-agent
-  container:
-    name: orchestrator-agent
-    portName: http
-    portNumber: 7010
-    args: []
-  image:
-    name: khanhle04/orchestrator-agent
-    version: v1.0.0
-    imagePullPolicy: IfNotPresent
-  # resources:
-  #   requests:
-  #     cpu: 200m
-  #     memory: 1.5Gi
-  #   limits:
-  #     cpu: 2
-  #     memory: 10Gi
+
+image:
+  repository: khanhle04/orchestrator-agent
+  tag: v1.0.0
+  pullPolicy: IfNotPresent
+
+
+podAnnotations: {}
+
+
+resources: {}
+  # limits:
+  # cpu: 200m
+  # memory: 256Mi
+  # requests:
+  # cpu: 100m
+  # memory: 128Mi
+
+
+affinity: {}
+nodeSelector: {}
+tolerations: []
+
 
 service:
-  name: orchestrator-agent
-  type: NodePort 
-  httpPort:
-    enable: true
-    port: 32001
-    targetPort: 7010
+  type: NodePort
+  port: 80 # Service port (client-facing)
+  targetPort: 7010 # Container port app lắng nghe (chỉnh nếu app khác)
+  nodePort: 32001 # NodePort cố định
+
 
 ingress:
   enabled: true
-  name: orchestrator-agent-ingress
+  className: nginx
+  annotations: {}
+# ví dụ bật rewrite: nginx.ingress.kubernetes.io/rewrite-target: /
   hosts:
-    host: orchestrator-agent.khanhle.local
-    paths:
-      path: /
-      pathType: ImplementationSpecific
-  tls: []
-    # - secretName: chart-example-tls
-    #   hosts:
-    #     - chart-example.local
+    - host: orchestrator.khanhle.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    enabled: false
+    secretName: orchestrator-agent-tls # dùng khi enabled=true
+
+
+container:
+  name: orchestrator-agent
+  port: 7010 # trùng với service.targetPort ở trên
+  env: [] # ví dụ: [{ name: "ENV", value: "prod" }]
+  command: [] # ví dụ: ["/bin/app", "--flag"]
+  args: [] # ví dụ: ["--config=/etc/app/config.yaml"]
+  livenessProbe:
+    enabled: false
+  readinessProbe:
+    enabled: false

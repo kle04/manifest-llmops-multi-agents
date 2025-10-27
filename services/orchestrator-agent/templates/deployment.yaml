@@ -1,27 +1,61 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.deployment.name }}
-  namespace: {{ .Values.namespace }}
+  name: {{ include "orchestrator-agent.fullname" . }}
   labels:
-    app: {{ .Values.deployment.labels.appName }}
+    {{- include "orchestrator-agent.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.deployment.replicaCount }}
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.deployment.labels.appName }}
+      app.kubernetes.io/name: {{ include "orchestrator-agent.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
-      annotations:
       labels:
-        app: {{ .Values.deployment.labels.appName }}
+        app.kubernetes.io/name: {{ include "orchestrator-agent.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-      terminationGracePeriodSeconds: 30
       containers:
-        - name: {{ .Values.deployment.container.name }}
-          image: "{{ .Values.deployment.image.name }}:{{ .Values.deployment.image.version }}"
-          imagePullPolicy: {{ .Values.deployment.image.imagePullPolicy }}
-          args: {{ toJson .Values.deployment.container.args }}
+        - name: {{ .Values.container.name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.deployment.container.portNumber }}
-              name: {{ .Values.deployment.container.portName }}
+            - name: http
+              containerPort: {{ .Values.container.port }}
+          {{- if .Values.container.env }}
+          env:
+          {{- toYaml .Values.container.env | nindent 12 }}
+          {{- end }}
+          {{- if .Values.container.command }}
+          command:
+          {{- toYaml .Values.container.command | nindent 12 }}
+          {{- end }}
+          {{- if .Values.container.args }}
+          args:
+          {{- toYaml .Values.container.args | nindent 12 }}
+          {{- end }}
+          {{- if .Values.container.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          {{- end }}
+          {{- if .Values.container.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
