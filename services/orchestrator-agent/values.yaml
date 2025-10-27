@@ -1,50 +1,46 @@
-image:
-  repository: khanhle04/orchestrator-agent
-  tag: v1.0.0
-  pullPolicy: IfNotPresent
+namespace: orchestrator-agent
 
-replicaCount: 1
+deployment:
+  name: orchestrator-agent
+  replicaCount: 1
+  labels:
+    appName: orchestrator-agent
+  container:
+    name: orchestrator-agent
+    portNumber: 7010
+    args: []
+  image:
+    name: khanhle04/orchestrator-agent
+    version: v1.0.0
+    imagePullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 200m
+      memory: 1.5Gi
+    limits:
+      cpu: 2
+      memory: 10Gi
 
 service:
-  type: ClusterIP
-  port: 7010
+  name: retrieval
+  type: ClusterIP 
+  httpPort:
+    enable: true
+    port: 65002
+    targetPort: 7010
 
-env: []
-envFrom:
-  configMapRef: ""
-  secretRef: ""
-
-resources:
-  requests:
-    cpu: 100m
-    memory: 256Mi
-  limits:
-    cpu: 500m
-    memory: 512Mi
-
-livenessProbe:
-  enabled: true
-  path: /health
-  initialDelaySeconds: 10
-  periodSeconds: 15
-
-readinessProbe:
-  enabled: true
-  path: /health
-  initialDelaySeconds: 5
-  periodSeconds: 10
-
-nodeSelector: {}
-affinity: {}
-tolerations: []
-
-extraEnv: {}                     # nếu muốn thêm env yaml map
-extraVolumes: []
-extraVolumeMounts: []
-
-serviceAccount:
-  create: true
+ingress:
+  enabled: false
+  className: ""
   annotations: {}
-  name: ""
-
-podAnnotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: orchestrator-agent.khanhle.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+    # - secretName: chart-example-tls
+    #   hosts:
+    #     - chart-example.local
