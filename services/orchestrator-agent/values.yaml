@@ -1,4 +1,4 @@
-namespace: orchestrator-agent
+namespace: agents
 
 deployment:
   name: orchestrator-agent
