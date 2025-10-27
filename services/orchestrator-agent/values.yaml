@@ -22,7 +22,7 @@ deployment:
       memory: 10Gi
 
 service:
-  name: retrieval
+  name: orchestrator-agent
   type: ClusterIP 
   httpPort:
     enable: true
