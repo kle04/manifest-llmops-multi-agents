@@ -24,4 +24,4 @@ spec:
           args: {{ toJson .Values.deployment.container.args }}
           ports:
             - containerPort: {{ .Values.deployment.container.portNumber }}
-              name: {{ .Values.deployment.container.name }}
+              name: {{ .Values.deployment.container.portName }}
