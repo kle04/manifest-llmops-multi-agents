@@ -24,14 +24,14 @@ deployment:
 
 service:
   name: orchestrator-agent
-  type: ClusterIP 
+  type: NodePort 
   httpPort:
     enable: true
-    port: 65002
+    port: 32001
     targetPort: 7010
 
 ingress:
-  enabled: false
+  enabled: true
   className: ""
   annotations: {}
     # kubernetes.io/ingress.class: nginx
