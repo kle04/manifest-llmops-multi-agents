@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "orchestrator-agent.fullname" . }}
+  name: {{ .Values.container.name }}
   labels:
     {{- include "orchestrator-agent.labels" . | nindent 4 }}
 spec:

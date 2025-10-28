@@ -31,7 +31,7 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ include "orchestrator-agent.fullname" $ }}
+                name: orchestrator-agent
                 port:
                   number: {{ $.Values.service.port }}
           {{- end }}

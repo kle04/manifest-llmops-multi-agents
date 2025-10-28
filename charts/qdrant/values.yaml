@@ -41,13 +41,13 @@ service:
       checksEnabled: false
 
 ingress:
-  enabled: false
-  ingressClassName: ""
+  enabled: true
+  ingressClassName: nginx
   additionalLabels: {}
   annotations: {}
     # kubernetes.io/ingress.class: alb
   hosts:
-    - host: example-domain.com
+    - host: qdrant.khanhle.local
       paths:
         - path: /
           pathType: Prefix
