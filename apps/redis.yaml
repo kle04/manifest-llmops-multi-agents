@@ -3,23 +3,23 @@ kind: Application
 metadata:
   name: redis
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
 spec:
   project: default
   source:
-    repoURL: https://github.com/kle04/manifest-llmops-multi-agents
-    targetRevision: main
-    path: charts/redis
+    repoURL: 'https://charts.bitnami.com/bitnami'
+    chart: redis
+    targetRevision: 23.2.12 # Use the desired version of the chart
     helm:
-      valueFiles:
-        - values.yaml
+      releaseName: redis
+      parameters:
+        - name: replication.enabled
+          value: "true"
+        - name: replication.slaveCount
+          value: "2"  # Number of replicas you want to create
   destination:
-    server: https://kubernetes.default.svc
+    server: 'https://kubernetes.default.svc'
     namespace: redis
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
