@@ -20,6 +20,10 @@ spec:
           value: "nginx"
         - name: ingress.hosts[0].host
           value: "qdrant.k8s.master.local"
+        - name: ingress.hosts[0].paths[0].path
+          value: "/"
+        - name: ingress.hosts[0].paths[0].pathType
+          value: "Prefix"
           
   destination:
     server: 'https://kubernetes.default.svc'
