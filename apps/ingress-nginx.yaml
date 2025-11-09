@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  project: default
+  source:
+    repoURL: 'https://charts.bitnami.com/bitnami'
+    chart: ingress-nginx
+    targetRevision: 23.2.12 # Use the desired version of the chart
+    helm:
+      releaseName: ingress-nginx
+      parameters:
+        - name: controller.service.type
+          value: "NodePort"
+        - name: controller.service.ports.http
+          value: "30080"
+        - name: controller.service.ports.https
+          value: "30443"
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: ingress-nginx
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
