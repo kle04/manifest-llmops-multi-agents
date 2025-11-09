@@ -15,11 +15,11 @@ spec:
       releaseName: qdrant
       parameters:
         - name: ingress.enabled
-          value: true
+          value: "true"
         - name: ingress.ingressClassName
-          value: 'nginx'
+          value: "nginx"
         - name: ingress.hosts[0].host
-          value: 'qdrant.k8s.master.local'
+          value: "qdrant.k8s.master.local"
           
   destination:
     server: 'https://kubernetes.default.svc'
