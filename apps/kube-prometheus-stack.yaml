@@ -23,7 +23,7 @@ spec:
           value: "nginx"
         - name: grafana.ingress.hosts[0].host
           value: "grafana.k8s.master.local"
-        - name: grafana.ingress.paths[0]  # Array paths
+        - name: grafana.ingress.path  # Array paths
           value: "/"
 
         # Prometheus Ingress
