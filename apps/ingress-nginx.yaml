@@ -20,6 +20,10 @@ spec:
           value: "30080"
         - name: controller.service.ports.https
           value: "30443"
+        - name: controller.service.nodePorts.http
+          value: "30080"
+        - name: controller.service.nodePorts.https
+          value: "30443"
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: ingress-nginx
