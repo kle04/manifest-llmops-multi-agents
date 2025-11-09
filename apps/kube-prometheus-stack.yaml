@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  project: default
+  source:
+    repoURL: 'https://prometheus-community.github.io/helm-charts'
+    chart: kube-prometheus-stack
+    targetRevision: 79.4.1
+    helm:
+      releaseName: kube-prometheus-stack
+      parameters:
+        - name: grafana.ingress.enabled
+          value: "true"
+        - name: grafana.ingress.annotations
+          value: "kubernetes.io/ingress.class: nginx"
+        - name: grafana.ingress.hosts
+          value: "grafana.k8s.master.local"   
+        - name: grafana.ingress.path
+          value: "/"       
+        - name: prometheus.ingress.enabled
+          value: "true"
+        - name: prometheus.ingress.ingressClassName
+          value: "nginx"
+        - name: prometheus.ingress.hosts
+          value: "prometheus.k8s.master.local"
+        - name: prometheus.ingress.paths
+          value: "/"
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: kube-prometheus-stack
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
