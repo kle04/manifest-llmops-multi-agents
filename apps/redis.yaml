@@ -13,11 +13,11 @@ spec:
     targetRevision: 23.2.12 # Use the desired version of the chart
     helm:
       releaseName: redis
-      parameters:
-        - name: replication.enabled
-          value: "true"
-        - name: replication.slaveCount
-          value: "2"  # Number of replicas you want to create
+      # parameters:
+      #   - name: replication.enabled
+      #     value: "true"
+      #   - name: replication.slaveCount
+      #     value: "2"  # Number of replicas you want to create
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: redis

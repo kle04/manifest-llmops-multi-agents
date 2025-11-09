@@ -10,13 +10,14 @@ image:
 podAnnotations: {}
 
 
-resources: {}
-  # limits:
-  # cpu: 200m
-  # memory: 256Mi
-  # requests:
-  # cpu: 100m
-  # memory: 128Mi
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  
 
 
 affinity: {}
@@ -37,7 +38,7 @@ ingress:
   annotations: {}
 # ví dụ bật rewrite: nginx.ingress.kubernetes.io/rewrite-target: /
   hosts:
-    - host: orchestrator.khanhle.local
+    - host: orchestrator.k8s.master.local
       paths:
         - path: /
           pathType: Prefix
@@ -49,10 +50,13 @@ ingress:
 container:
   name: orchestrator-agent
   port: 7010 # trùng với service.targetPort ở trên
-  env: [] # ví dụ: [{ name: "ENV", value: "prod" }]
   command: [] # ví dụ: ["/bin/app", "--flag"]
   args: [] # ví dụ: ["--config=/etc/app/config.yaml"]
   livenessProbe:
     enabled: false
   readinessProbe:
     enabled: false
+
+existingSecret:
+  enabled: true
+  name: orchestrator-agent-secret

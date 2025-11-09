@@ -8,14 +8,21 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/kle04/manifest-llmops-multi-agents
-    targetRevision: main
-    path: charts/qdrant
+    repoURL: 'https://qdrant.github.io/qdrant-helm'
+    chart: qdrant
+    targetRevision: 1.15.5 # Use the desired version of the chart
     helm:
-      valueFiles:
-        - values.yaml
+      releaseName: qdrant
+      parameters:
+        - name: ingress.enabled
+          value: true
+        - name: ingress.ingressClassName
+          value: nginx
+        - name: ingress.hosts[0].host
+          value: qdrant.k8s.master.local
+          
   destination:
-    server: https://kubernetes.default.svc
+    server: 'https://kubernetes.default.svc'
     namespace: qdrant
   syncPolicy:
     automated:

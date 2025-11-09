@@ -23,9 +23,10 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.container.port }}
-          {{- if .Values.container.env }}
-          env:
-          {{- toYaml .Values.container.env | nindent 12 }}
+          {{- if .Values.existingSecret.enabled }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.existingSecret.name }}
           {{- end }}
           {{- if .Values.container.command }}
           command:
@@ -47,15 +48,10 @@ spec:
               path: /
               port: http
           {{- end }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
