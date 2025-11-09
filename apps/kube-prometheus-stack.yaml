@@ -14,21 +14,26 @@ spec:
     helm:
       releaseName: kube-prometheus-stack
       parameters:
+        # Grafana Ingress
         - name: grafana.ingress.enabled
           value: "true"
-        - name: grafana.ingress.annotations
-          value: "kubernetes.io/ingress.class: nginx"
-        - name: grafana.ingress.hosts
-          value: "grafana.k8s.master.local"   
-        - name: grafana.ingress.path
-          value: "/"       
+        - name: grafana.ingress.ingressClassName  # Thêm nếu cần (tùy chart)
+          value: "nginx"
+        - name: grafana.ingress.annotations."kubernetes\.io/ingress\.class"  # Map: dùng quote + escape dot
+          value: "nginx"
+        - name: grafana.ingress.hosts[0].host
+          value: "grafana.k8s.master.local"
+        - name: grafana.ingress.paths[0]  # Array paths
+          value: "/"
+
+        # Prometheus Ingress
         - name: prometheus.ingress.enabled
           value: "true"
         - name: prometheus.ingress.ingressClassName
           value: "nginx"
-        - name: prometheus.ingress.hosts
+        - name: prometheus.ingress.hosts[0].host
           value: "prometheus.k8s.master.local"
-        - name: prometheus.ingress.paths
+        - name: prometheus.ingress.paths[0]  # Array paths
           value: "/"
   destination:
     server: 'https://kubernetes.default.svc'
