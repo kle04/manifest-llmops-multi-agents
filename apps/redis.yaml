@@ -10,14 +10,12 @@ spec:
   source:
     repoURL: 'https://charts.bitnami.com/bitnami'
     chart: redis
-    targetRevision: 23.2.12 # Use the desired version of the chart
+    targetRevision: 23.2.12
     helm:
       releaseName: redis
-      # parameters:
-      #   - name: replication.enabled
-      #     value: "true"
-      #   - name: replication.slaveCount
-      #     value: "2"  # Number of replicas you want to create
+      parameters:
+        - name: replica.replicaCount
+          value: "1"
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: redis
