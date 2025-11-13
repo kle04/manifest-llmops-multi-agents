@@ -17,12 +17,12 @@ spec:
         ingress:
           enabled: true
           ingressClassName: nginx
+          path: /
+          pathType: Prefix
           hosts:
-            - host: grafana.khanklee.id.vn
-              paths:
-                - path: /
-                  pathType: Prefix
-                  servicePort: 3000
+            - grafana.khanklee.id.vn
+          
+          
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: grafana
