@@ -38,7 +38,7 @@ ingress:
   annotations: {}
 # ví dụ bật rewrite: nginx.ingress.kubernetes.io/rewrite-target: /
   hosts:
-    - host: orchestrator.k8s.master.local
+    - host: orchestrator.khanklee.id.vn
       paths:
         - path: /
           pathType: Prefix

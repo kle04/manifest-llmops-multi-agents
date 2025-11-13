@@ -19,13 +19,13 @@ spec:
         - name: ingress.ingressClassName
           value: "nginx"
         - name: ingress.hosts[0].host
-          value: "qdrant.k8s.master.local"
+          value: "qdrant.khanklee.id.vn"
         - name: ingress.hosts[0].paths[0].path
           value: "/"
         - name: ingress.hosts[0].paths[0].pathType
           value: "Prefix"
-        - name: ingress.hosts[0].paths[0].servicePort  # ← THÊM DÒNG NÀY
-          value: "6333"  # Port của Qdrant service (REST API)
+        - name: ingress.hosts[0].paths[0].servicePort
+          value: "6333"
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: qdrant
