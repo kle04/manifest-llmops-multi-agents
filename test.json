@@ -1,0 +1,12 @@
+{
+    {
+        "question": "câu hỏi 1",
+        "ground_truth": "trả lời mong muốn 1",
+        "context": "ngữ cảnh của câu hỏi 1"
+    },
+    {
+        "question": "câu hỏi 2",
+        "ground_truth": "trả lời mong muốn 2",
+        "context": "ngữ cảnh của câu hỏi 2"
+    }
+}
