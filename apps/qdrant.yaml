@@ -13,26 +13,21 @@ spec:
     targetRevision: 1.15.5
     helm:
       releaseName: qdrant
-      parameters:
-        - name: ingress.enabled
-          value: "true"
-        - name: ingress.ingressClassName
-          value: "nginx"
-        - name: ingress.hosts[0].host
-          value: "qdrant.khanklee.id.vn"
-        - name: ingress.hosts[0].paths[0].path
-          value: "/"
-        - name: ingress.hosts[0].paths[0].pathType
-          value: "Prefix"
-        - name: ingress.hosts[0].paths[0].servicePort
-          value: "6333"
-        - name: ingress.annotations.nginx\.ingress\.kubernetes\.io/proxy-body-size
-          value: "0"
-        - name: ingress.annotations.nginx\.ingress\.kubernetes\.io/proxy-read-timeout
-          value: "600"
-        - name: ingress.annotations.nginx\.ingress\.kubernetes\.io/proxy-send-timeout
-          value: "600"
-
+      values: |
+        ingress:
+          enabled: true
+          ingressClassName: nginx
+          annotations:
+            nginx.ingress.kubernetes.io/proxy-body-size: "0"
+            nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+            nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+          hosts:
+            - host: qdrant.khanklee.id.vn
+              paths:
+                - path: /
+                  pathType: Prefix
+                  servicePort: 6333
+          
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: qdrant
