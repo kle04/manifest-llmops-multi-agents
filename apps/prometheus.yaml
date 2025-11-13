@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kube-prometheus-stack
+  name: prometheus
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
@@ -9,13 +9,15 @@ spec:
   project: default
   source:
     repoURL: 'https://prometheus-community.github.io/helm-charts'
-    chart: kube-prometheus-stack
-    targetRevision: 79.4.1
+    chart: prometheus
     helm:
-      releaseName: kube-prometheus-stack
+      releaseName: prometheus
+      parameters:
+        - name: replica.replicaCount
+          value: "1"
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: kube-prometheus-stack
+    namespace: prometheus
   syncPolicy:
     automated:
       prune: true
