@@ -21,6 +21,10 @@ spec:
           pathType: Prefix
           hosts:
             - grafana.khanklee.id.vn
+      parameters:
+        - name: persistence.enabled
+          value: "true"
+
           
           
   destination:
