@@ -12,7 +12,7 @@ spec:
     chart: jenkins
     targetRevision: 5.8.110
     helm:
-      releaseName: grafana
+      releaseName: jenkins
       values: |
         controller:
           ingress:
