@@ -21,9 +21,6 @@ spec:
             path: /
             pathType: Prefix
             hostName: jenkins.khanklee.id.vn
-
-          
-          
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: jenkins

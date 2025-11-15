@@ -26,10 +26,9 @@ tolerations: []
 
 
 service:
-  type: NodePort
-  port: 80 # Service port (client-facing)
+  type: ClusterIP
+  port: 7010 # Service port (client-facing)
   targetPort: 7010 # Container port app lắng nghe (chỉnh nếu app khác)
-  nodePort: 32001 # NodePort cố định
 
 
 ingress:
