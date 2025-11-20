@@ -23,10 +23,16 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.container.port }}
-          {{- if .Values.existingSecret.enabled }}
+          {{- if or .Values.config.enabled .Values.existingSecret.enabled }}
           envFrom:
+            {{- if .Values.config.enabled }}
+            - configMapRef:
+                name: {{ include "orchestrator-agent.name" . }}-config
+            {{- end }}
+            {{- if .Values.existingSecret.enabled }}
             - secretRef:
                 name: {{ .Values.existingSecret.name }}
+            {{- end }}
           {{- end }}
           {{- if .Values.container.command }}
           command:
