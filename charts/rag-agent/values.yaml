@@ -74,5 +74,5 @@ config:
     QDRANT_URL: qdrant.qdrant.svc.cluster.local
     HOST: 0.0.0.0
     PORT: 7005
-    GOOGLE_LLM_MODEL: gemma-3n-e27b-it
+    GOOGLE_LLM_MODEL: gemma-3-27b
 
