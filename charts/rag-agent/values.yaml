@@ -1,0 +1,79 @@
+replicaCount: 2
+
+
+image:
+  repository: khanhle04/rag-agent
+  tag: v1.0.0
+  pullPolicy: IfNotPresent
+
+
+podAnnotations: {}
+
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 1024Mi
+  
+
+
+affinity: {}
+nodeSelector: {}
+tolerations: []
+
+
+service:
+  type: ClusterIP
+  port: 7005 # Service port (client-facing)
+  targetPort: 7005 # Container port app lắng nghe (chỉnh nếu app khác)
+
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations: {}
+# ví dụ bật rewrite: nginx.ingress.kubernetes.io/rewrite-target: /
+  hosts:
+    - host: rag.khanklee.id.vn
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    enabled: false
+    secretName: rag-agent-tls # dùng khi enabled=true
+
+
+container:
+  name: rag-agent
+  port: 7010 # trùng với service.targetPort ở trên
+  command: [] # ví dụ: ["/bin/app", "--flag"]
+  args: [] # ví dụ: ["--config=/etc/app/config.yaml"]
+  livenessProbe:
+    enabled: false
+  readinessProbe:
+    enabled: false
+  
+
+
+sealedSecrets:
+  enabled: true
+  name: rag-agent-sealed-secret
+  namespace: rag-agent
+  encryptedData:
+    GOOGLE_API_KEY: "AgC69VR2CHf7bTr9aZKJ3MMGBr/qthH3JZtPGu+OpcwjMT/wUOU6l1spr8rCpIoirwB+RHUtbPq7EcigjgQ3QafkEdiMy5qVrFStfS4PIq/2o09G3pA/9Dm/mtsUd367LQofLiOY0wzm+1ME5Q8bHyG+rMP55aL6eFzBbqEaT0eSZxU6QqXTzMJpXRte/yZQkMLqYi4gubLFEbWnk7XzWn6Riudoe7E3HlaJjOpPT/qdetGHBSka1lgpPJ7o8LJ5hW7ae138PacGqaLtyrOl+fiRViRK4sL3fFAaXsyTvEGmcv9EU4KDf/8+3CaEdUjR6IMP36S8c8QHvc4hDFseWY4bOb2huRCNBadG3rziAQlzXx0+/xr3RpacbAmhgmr5r9owlcE8Tgu5aEwpnMMGsgAklyjT5zk36HVXzz0Xdg1r7Sh2GdzP/plFfQ7SdPP7USkxz04UkojuaRReJrU4Z9P/kclReQ2B4uO+95oXR4eboZ5Qjm1k/bu9HzvpwhTzIpdmzomnXtS8N5P3TB0PJQ7AYoELHM1xWvNivlnrxeyq6mPDXbN3qZv37Y8hYu+EGf49mhEBG0ABnIpNDUcfo58jtB71PxGQuNqFZDSXjNoCLo1gJAv+8W6mX9N6m6ou9+HWv7Sdx8lx5y2sWqXrwXcIrOU/jn8OkE//wu/ZQucwNHUp4UCtSEUe5V+58ZrgZGUJ9uevpNrD8u/R5IddrIuCm3JId8rHgYpVQy/CdiiEow2BPof2UdY="
+
+existingSecret:
+  enabled: true
+  name: "rag-agent-sealed-secret" # Tên secret đã có sẵn trong cluster để inject biến môi trường
+
+config:
+  enabled: true
+  data:
+    QDRANT_URL: qdrant.qdrant.svc.cluster.local
+    HOST: 0.0.0.0
+    PORT: 7005
+    GOOGLE_LLM_MODEL: gemma-3n-e27b-it
+
