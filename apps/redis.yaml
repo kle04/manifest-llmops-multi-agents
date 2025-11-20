@@ -16,6 +16,11 @@ spec:
       parameters:
         - name: replica.replicaCount
           value: "1"
+        - name: auth.existingSecret
+          value: redis-auth
+        - name: auth.existingSecretPasswordKey
+          value: redis-password
+          
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: redis

@@ -75,10 +75,10 @@ existingSecret:
 config:
   enabled: true
   data:
-    REDIS_HOST: "redis-master.redis.svc.cluster.local"
+    REDIS_HOST: redis-master.redis.svc.cluster.local
     REDIS_PORT: 6379
-    REDIS_DB: "0"
-    RAG_AGENT_URL: "rag-agent.rag-agent.svc.cluster.local"
+    REDIS_DB: 0
+    RAG_AGENT_URL: rag-agent.rag-agent.svc.cluster.local
     ORCHESTRATOR_AGENT_PORT: 7010
-    ORCHESTRATOR_AGENT_HOST: "0.0.0.0"
+    ORCHESTRATOR_AGENT_HOST: 0.0.0.0
 
