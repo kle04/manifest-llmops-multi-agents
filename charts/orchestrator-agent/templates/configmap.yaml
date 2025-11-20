@@ -1,4 +1,4 @@
-{{- if .Values.configMap.enabled }}
+{{- if .Values.config.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "orchestrator-agent.labels" . | nindent 4 }}
 data:
-  {{- range $key, $value := .Values.config.data }}
+  {{- range $key, $value := (.Values.config.data | default (dict)) }}
   {{ $key }}: {{ $value | quote }}
   {{- end }}
 {{- end }}

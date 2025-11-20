@@ -1,4 +1,4 @@
-replicaCount: 1
+replicaCount: 2
 
 
 image:
@@ -12,11 +12,11 @@ podAnnotations: {}
 
 resources:
   requests:
-    cpu: 100m
-    memory: 128Mi
-  limits:
     cpu: 200m
     memory: 256Mi
+  limits:
+    cpu: 400m
+    memory: 512Mi
   
 
 
@@ -72,11 +72,12 @@ existingSecret:
   enabled: true
   name: "orchestrator-agent-sealed-secret" # Tên secret đã có sẵn trong cluster để inject biến môi trường
 
-configMap:
+config:
   enabled: true
   data:
     REDIS_HOST: "redis-master.redis.svc.cluster.local"
-    REDIS_PORT: "6379"
+    REDIS_PORT: 6379
     REDIS_DB: "0"
     RAG_AGENT_URL: "rag-agent.rag-agent.svc.cluster.local"
+    ORCHESTRATOR_AGENT_PORT: 7010
 
