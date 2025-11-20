@@ -3,7 +3,7 @@ replicaCount: 2
 
 image:
   repository: khanhle04/orchestrator-agent
-  tag: v1.0.0
+  tag: v1.0.1
   pullPolicy: IfNotPresent
 
 
@@ -80,4 +80,5 @@ config:
     REDIS_DB: "0"
     RAG_AGENT_URL: "rag-agent.rag-agent.svc.cluster.local"
     ORCHESTRATOR_AGENT_PORT: 7010
+    ORCHESTRATOR_AGENT_HOST: "0.0.0.0"
 
