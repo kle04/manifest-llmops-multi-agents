@@ -60,14 +60,13 @@ container:
 
 sealedSecrets:
   enabled: true
-  name: rag-agent-sealed-secret
+  name: rag-agent-sealed-secrets
   namespace: rag-agent
   encryptedData:
-    GOOGLE_API_KEY: "AgC69VR2CHf7bTr9aZKJ3MMGBr/qthH3JZtPGu+OpcwjMT/wUOU6l1spr8rCpIoirwB+RHUtbPq7EcigjgQ3QafkEdiMy5qVrFStfS4PIq/2o09G3pA/9Dm/mtsUd367LQofLiOY0wzm+1ME5Q8bHyG+rMP55aL6eFzBbqEaT0eSZxU6QqXTzMJpXRte/yZQkMLqYi4gubLFEbWnk7XzWn6Riudoe7E3HlaJjOpPT/qdetGHBSka1lgpPJ7o8LJ5hW7ae138PacGqaLtyrOl+fiRViRK4sL3fFAaXsyTvEGmcv9EU4KDf/8+3CaEdUjR6IMP36S8c8QHvc4hDFseWY4bOb2huRCNBadG3rziAQlzXx0+/xr3RpacbAmhgmr5r9owlcE8Tgu5aEwpnMMGsgAklyjT5zk36HVXzz0Xdg1r7Sh2GdzP/plFfQ7SdPP7USkxz04UkojuaRReJrU4Z9P/kclReQ2B4uO+95oXR4eboZ5Qjm1k/bu9HzvpwhTzIpdmzomnXtS8N5P3TB0PJQ7AYoELHM1xWvNivlnrxeyq6mPDXbN3qZv37Y8hYu+EGf49mhEBG0ABnIpNDUcfo58jtB71PxGQuNqFZDSXjNoCLo1gJAv+8W6mX9N6m6ou9+HWv7Sdx8lx5y2sWqXrwXcIrOU/jn8OkE//wu/ZQucwNHUp4UCtSEUe5V+58ZrgZGUJ9uevpNrD8u/R5IddrIuCm3JId8rHgYpVQy/CdiiEow2BPof2UdY=%"
-
+    GOOGLE_API_KEY: "AgAmQGO7NGMgmbwSZ3sNl6BOL/qY9fD54ZB0RY7Gw70CwiwlH9vF9YvdsSY3GQckltq1V72KN182LitYqyS4lsML+QkUP8tU1oVxj/n6NscfywB8JTejtQlD9Bukh9hEudX5xQ8jg1wxr4LfAEl2PCUeDQmOA9YsGWwW91f6qysyCZLjXCA/qDfdjhPk1l4aLk/lcZTr4rvWf+v9zYm5kwg43BslnjlOTtU24o5WqP6/AKghb8YMQGoYH/fJcgZkM9CqayrMQP/SSZfP/0SKkeIX3qLjaFeu+ZK4LuDjHpyUzevL/sx/6wSptkyApekYdX2z63HVxyfbDQz9tl8DBrmqrRfR3F3/6vqNhSI/sP44Bq93qbspvXG1vDoZNWFkXpAcJFVpJ7T31umaMS23QPm2/VlVhH0H2fv1LkQV0Apc/9KCGWyGFdXq3bNCwIi3h/mA4aW6xNseYETnzyhWsf5EUTDFiNcnMPVMT7ey7Ije0u+PKs/GrQD/li0ghL/Q3BBQHBwkiUl5iJEHVSsEC2E/KYZfHIp1GCzLEQ5kIZm+xCGR3RLqMefbuA63kCaIP3FcfRwP9DmtSFDRlfL2r5ijtI5SHU9WsQ9g35VQLxzSH4TVtiBK/7DVgNTfqv9PS3FwtVHPl1auR6jH1W7Tj3xJhm3AIj+ecsYcz5VnsTFBFDDC6x2JtsFayQIcyYIYCtmxZa21Ao31kYQHTobcIg+chkIXmLXPysVaKwPJk/7VQUjDGgtT8s4="
 existingSecret:
   enabled: true
-  name: "rag-agent-sealed-secret" # Tên secret đã có sẵn trong cluster để inject biến môi trường
+  name: "rag-agent-sealed-secrets" # Tên secret đã có sẵn trong cluster để inject biến môi trường
 
 config:
   enabled: true
