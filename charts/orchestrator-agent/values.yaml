@@ -69,5 +69,14 @@ sealedSecrets:
     REDIS_PASSWORD: "AgAKnCBIIQf+qIjgWVpaFrCYepRgtThd0OL/SXpCzuhQzTAiQhA7TzKRd3uTESBezV31aVN6Kf8GNBuopWQgaU7QmeqK+3FSsLgOe27H4AiLdiUYUQmAmCg0PfRAan7cSQEIbXh0ZWSbaeUkmTvPKEp3Jh7ZUR2e41qBb8dS1fCPrTLILBP8Ex40S5ThzqFcIPQIsmjIzOFsVuQzIGJ0ZQfQWiJaziJxgk3ovxaOTOeyzaJ1gD+SISnia55H9e6ETmxIJ9kcVHyQot1AyJKanLZKIjZtGIrwtd+2K7QSZZM14kzD1EbY5U+OYNug8X71ETBwUWV8GDGng0urequtTIO5K9Fc2xtiY1/gY/IsxCISQk89ayCGDllzbglrXNctucfOpJg3EtuZEt4ugmKLjxlxsjbT7FdR8OFEbO4nuvq8+RDyPcjqLD0DvCMj5r277mvI66fl5jYUo2g/fBcvQ79kInHwu0pKR6GprvcoxrV2wXCXGwul0JVrYMWteTtMjKlLBYiYwEj/jXGWoMu6lFJ/qibNOAY4nwBqgFPWWtPHr0CayuAacpb5Ku9hxIsZVqedFmK+34Nv8at9mripu9Zzn6iZjy8Xhf+SxxENuOnC6W5b1dclBEdCQXRnLUDlT+zYVJHmLr1Y6F+ZLjP3lg5JgDWcEeifC+3Q9oVYCXsWh9qG0qbj3BW8LJVDaMdGKt1c5/79QHaMHriL"
 
 existingSecret:
-  enabled: false
+  enabled: true
   name: "orchestrator-agent-sealed-secret" # Tên secret đã có sẵn trong cluster để inject biến môi trường
+
+configMap:
+  enabled: true
+  data:
+    REDIS_HOST: "redis-master.redis.svc.cluster.local"
+    REDIS_PORT: "6379"
+    REDIS_DB: "0"
+    RAG_AGENT_URL: "rag-agent.rag-agent.svc.cluster.local"
+
